@@ -14,4 +14,7 @@ public class FileRecordService {
     public FileRecord save(FileRecord record) {
         return repository.save(record);
     }
+    public FileRecord findByShareId(String shareId) {
+    return repository.findByShareId(shareId).orElse(null);
+}
 }
