@@ -5,7 +5,7 @@ import com.prishare.backend.model.User;
 import com.prishare.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import com.prishare.backend.security.JwtUtil;
 @RestController
 public class UserController {
 
@@ -17,15 +17,15 @@ public class UserController {
         return userService.registerUser(user);
     }
 
-    @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
+   @PostMapping("/login")
+public String login(@RequestBody LoginRequest request) {
 
-        boolean success = userService.loginUser(request);
+    boolean success = userService.loginUser(request);
 
-        if (success) {
-            return "Login Successful";
-        }
-
-        return "Invalid Credentials";
+    if (success) {
+        return JwtUtil.generateToken(request.getEmail());
     }
+
+    return "Invalid Credentials";
+} 
 }

@@ -9,30 +9,43 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.nio.file.*;
+import com.prishare.backend.model.FileRecord;
+import com.prishare.backend.service.FileRecordService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 public class FileController {
 
     private final Path uploadPath = Paths.get("uploads");
 
-    @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file)
-            throws IOException {
+    @Autowired
+    private FileRecordService fileRecordService;
 
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
+ @PostMapping("/upload")
+public String uploadFile(@RequestParam("file") MultipartFile file)
+        throws IOException {
 
-        Path filePath = uploadPath.resolve(file.getOriginalFilename());
-
-        Files.copy(
-                file.getInputStream(),
-                filePath,
-                StandardCopyOption.REPLACE_EXISTING
-        );
-
-        return "File uploaded successfully";
+    if (!Files.exists(uploadPath)) {
+        Files.createDirectories(uploadPath);
     }
+
+    Path filePath = uploadPath.resolve(file.getOriginalFilename());
+
+    Files.copy(
+            file.getInputStream(),
+            filePath,
+            StandardCopyOption.REPLACE_EXISTING
+    );
+
+    FileRecord record = new FileRecord();
+
+    record.setFilename(file.getOriginalFilename());
+    record.setOwnerEmail("sakthi@gmail.com");
+
+    fileRecordService.save(record);
+
+    return "File uploaded successfully";
+}
 
     @GetMapping("/download/{filename}")
     public ResponseEntity<Resource> downloadFile(
