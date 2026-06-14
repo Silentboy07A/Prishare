@@ -1,5 +1,8 @@
-package com.prishare.backend;
 
+package com.prishare.backend.controller;
+import com.prishare.backend.dto.LoginRequest;
+import com.prishare.backend.model.User;
+import com.prishare.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

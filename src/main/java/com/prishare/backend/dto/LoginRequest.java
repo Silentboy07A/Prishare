@@ -1,4 +1,4 @@
-package com.prishare.backend;
+package com.prishare.backend.dto;
 
 public class LoginRequest {
 

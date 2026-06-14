@@ -1,10 +1,14 @@
-package com.prishare.backend;
+
+package com.prishare.backend.service;
+
+import com.prishare.backend.dto.LoginRequest;
+import com.prishare.backend.model.User;
+import com.prishare.backend.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
 @Service
 public class UserService {
 
