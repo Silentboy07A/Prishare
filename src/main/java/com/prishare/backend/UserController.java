@@ -13,4 +13,16 @@ public class UserController {
     public User register(@RequestBody User user) {
         return userService.registerUser(user);
     }
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginRequest request) {
+
+        boolean success = userService.loginUser(request);
+
+        if (success) {
+            return "Login Successful";
+        }
+
+        return "Invalid Credentials";
+    }
 }
